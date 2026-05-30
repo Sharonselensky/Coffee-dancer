@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewLab - Interactive Coffee Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo">☕ BrewLab</div>
+        <ul>
+            <li><a href="#calculator">Ratio Calculator</a></li>
+            <li><a href="#methods">Brew Methods</a></li>
+            <li><a href="#timer">Brew Timer</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Brew Your Perfect Cup</h1>
+            <p>Interactive guide to café-quality coffee at home</p>
+            <button onclick="scrollToSection('calculator')">Start Brewing</button>
+        </div>
+        <div class="coffee-animation">
+            <div class="cup">
+                <div class="coffee"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+                <div class="steam"></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="calculator" class="card">
+        <h2>Coffee Ratio Calculator</h2>
+        <p>Pick your strength and cup size. We’ll do the math.</p>
+        <div class="calc-controls">
+            <div class="input-group">
+                <label>Cups of Coffee</label>
+                <input type="range" id="cups" min="1" max="8" value="1" oninput="updateCalc()">
+                <span id="cups-display">1 cup</span>
+            </div>
+            <div class="input-group">
+                <label>Strength</label>
+                <select id="strength" onchange="updateCalc()">
+                    <option value="17">Light 1:17</option>
+                    <option value="16" selected>Medium 1:16</option>
+                    <option value="15">Strong 1:15</option>
+                </select>
+            </div>
+        </div>
+        <div class="results">
+            <div class="result-box">
+                <span class="value" id="coffee-g">15g</span>
+                <span class="label">Coffee</span>
+            </div>
+            <div class="result-box">
+                <span class="value" id="water-g">240g</span>
+                <span class="label">Water</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="methods" class="methods">
+        <h2>Choose Your Brew Method</h2>
+        <div class="method-tabs">
+            <button class="tab-btn active" onclick="showMethod('french')">French Press</button>
+            <button class="tab-btn" onclick="showMethod('pour')">Pour Over</button>
+            <button class="tab-btn" onclick="showMethod('aeropress')">AeroPress</button>
+        </div>
+        
+        <div id="french" class="method-content active">
+            <h3>French Press</h3>
+            <div class="steps">
+                <div class="step" data-step="1">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Coarse grind, heat water to 96°C</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Add coffee, pour water, stir</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Steep 4 minutes</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Press slowly & serve</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pour" class="method-content">
+            <h3>Pour Over V60</h3>
+            <div class="steps">
+                <div class="step" data-step="1">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Medium grind, rinse filter</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Bloom: 2x coffee weight, 45s</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Pour in circles to total weight</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Total brew: 2:30-3:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="aeropress" class="method-content">
+            <h3>AeroPress</h3>
+            <div class="steps">
+                <div class="step" data-step="1">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Fine-medium grind, inverted method</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Add coffee + water, stir 10s</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Steep 1:30, flip & press</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Press for 30s, dilute to taste</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timer" class="card">
+        <h2>Brew Timer</h2>
+        <div class="timer-display" id="timer-display">04:00</div>
+        <div class="timer-controls">
+            <button onclick="startTimer(240)">French Press 4:00</button>
+            <button onclick="startTimer(180)">Pour Over 3:00</button>
+            <button onclick="startTimer(90)">AeroPress 1:30</button>
+            <button onclick="resetTimer()" class="reset">Reset</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with ☕ and JavaScript | Brew better coffee every day</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
